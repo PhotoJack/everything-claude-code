@@ -5,8 +5,9 @@
   "private": true,
   "scripts": {
     "start": "npx remotion studio",
-    "build": "npx remotion render src/index.jsx VideoWithOverlays out/video.mp4",
-    "render": "npx remotion render src/index.jsx VideoWithOverlays out/video.mp4",
+    "build": "npx remotion render src/index.jsx VideoRecap out/recap.mp4",
+    "render": "npx remotion render src/index.jsx VideoRecap out/recap.mp4",
+    "render:overlays": "npx remotion render src/index.jsx VideoWithOverlays out/overlays.mp4",
     "upgrade": "npx remotion upgrade"
   },
   "dependencies": {
