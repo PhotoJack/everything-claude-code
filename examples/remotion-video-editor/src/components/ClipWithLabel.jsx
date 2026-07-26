@@ -1,4 +1,11 @@
-import {AbsoluteFill, OffthreadVideo, interpolate, useCurrentFrame, useVideoConfig} from 'remotion';
+import {
+  AbsoluteFill,
+  OffthreadVideo,
+  interpolate,
+  staticFile,
+  useCurrentFrame,
+  useVideoConfig,
+} from 'remotion';
 
 export const ClipWithLabel = ({
   src,
@@ -34,6 +41,9 @@ export const ClipWithLabel = ({
           {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
         );
 
+  // Absolute URLs pass through; bare filenames resolve against public/.
+  const resolvedSrc = /^(https?:|blob:|data:)/.test(src) ? src : staticFile(src);
+
   const positionStyles = {
     'bottom-left': {bottom: 40, left: 40},
     'bottom-right': {bottom: 40, right: 40},
@@ -46,7 +56,7 @@ export const ClipWithLabel = ({
     <AbsoluteFill>
       <AbsoluteFill style={{transform: `scale(${scale})`, transformOrigin: 'center center'}}>
         <OffthreadVideo
-          src={src}
+          src={resolvedSrc}
           startFrom={startFrom}
           playbackRate={playbackRate}
           style={{width: '100%', height: '100%', objectFit: 'cover'}}

@@ -2,7 +2,7 @@
  * Recap configuration — edit this file to define your video recap.
  *
  * Each clip needs:
- *   src:              URL or staticFile() path to the video
+ *   src:              full URL, or a bare filename inside public/ (e.g. 'clip01.mp4')
  *   durationInFrames: how many frames this clip plays (at 30fps, 30 = 1 second)
  *   startFrom:        (optional) start playback from this frame in the source video
  *   playbackRate:     (optional) speed multiplier — 1 = normal, 0.5 = slow-mo, 2 = double speed
@@ -35,7 +35,8 @@ const RECAP_CONFIG = {
   },
 
   // Replace these with your actual video file URLs or paths.
-  // For local files, place them in public/ and use staticFile('filename.mp4').
+  // For local files, drop them in public/ and reference the bare filename
+  // (e.g. 'clip01.mp4') — it resolves via staticFile() automatically.
   //
   // Example with 30+ clips at ~45 frames each (1.5s) = ~50s of clip content + intro/outro.
   clips: [
