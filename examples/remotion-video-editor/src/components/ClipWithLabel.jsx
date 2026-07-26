@@ -1,6 +1,13 @@
 import {AbsoluteFill, OffthreadVideo, interpolate, useCurrentFrame, useVideoConfig} from 'remotion';
 
-export const ClipWithLabel = ({src, startFrom = 0, label, labelPosition = 'bottom-left'}) => {
+export const ClipWithLabel = ({
+  src,
+  startFrom = 0,
+  playbackRate = 1,
+  kenBurns = 'none',
+  label,
+  labelPosition = 'bottom-left',
+}) => {
   const frame = useCurrentFrame();
   const {durationInFrames} = useVideoConfig();
 
@@ -16,6 +23,17 @@ export const ClipWithLabel = ({src, startFrom = 0, label, labelPosition = 'botto
     {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
   );
 
+  // 'in' zooms 100% -> 112% (pushes toward the subject), 'out' reverses that.
+  const scale =
+    kenBurns === 'none'
+      ? 1
+      : interpolate(
+          frame,
+          [0, durationInFrames],
+          kenBurns === 'in' ? [1.0, 1.12] : [1.12, 1.0],
+          {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
+        );
+
   const positionStyles = {
     'bottom-left': {bottom: 40, left: 40},
     'bottom-right': {bottom: 40, right: 40},
@@ -26,11 +44,14 @@ export const ClipWithLabel = ({src, startFrom = 0, label, labelPosition = 'botto
 
   return (
     <AbsoluteFill>
-      <OffthreadVideo
-        src={src}
-        startFrom={startFrom}
-        style={{width: '100%', height: '100%', objectFit: 'cover'}}
-      />
+      <AbsoluteFill style={{transform: `scale(${scale})`, transformOrigin: 'center center'}}>
+        <OffthreadVideo
+          src={src}
+          startFrom={startFrom}
+          playbackRate={playbackRate}
+          style={{width: '100%', height: '100%', objectFit: 'cover'}}
+        />
+      </AbsoluteFill>
       {label && (
         <div
           style={{

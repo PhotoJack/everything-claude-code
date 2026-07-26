@@ -11,7 +11,14 @@ function calculateRecapDuration(config) {
     (sum, c) => sum + (c.durationInFrames || 45),
     0,
   );
-  return introFrames + clipFrames + outroFrames;
+
+  // TransitionSeries overlaps adjacent segments during each transition, so
+  // the rendered total is shorter than the sum of segment durations.
+  const segmentCount = (config.intro ? 1 : 0) + config.clips.length + (config.outro ? 1 : 0);
+  const transitionCount = Math.max(0, segmentCount - 1);
+  const totalOverlap = transitionCount * (config.transitionDuration || 8);
+
+  return introFrames + clipFrames + outroFrames - totalOverlap;
 }
 
 export const RemotionRoot = () => {
