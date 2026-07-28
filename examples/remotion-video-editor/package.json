@@ -1,0 +1,24 @@
+{
+  "name": "remotion-video-editor",
+  "version": "1.0.0",
+  "description": "Remotion-based video editor with overlay support",
+  "private": true,
+  "scripts": {
+    "start": "npx remotion studio",
+    "build": "npx remotion render src/index.jsx VideoRecap out/recap.mp4",
+    "render": "npx remotion render src/index.jsx VideoRecap out/recap.mp4",
+    "render:overlays": "npx remotion render src/index.jsx VideoWithOverlays out/overlays.mp4",
+    "upgrade": "npx remotion upgrade"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.242",
+    "@remotion/player": "4.0.242",
+    "@remotion/transitions": "4.0.242",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "4.0.242"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config": "4.0.242"
+  }
+}
