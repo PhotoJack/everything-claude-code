@@ -564,6 +564,188 @@ everything-claude-code/
 
 ---
 
+## Skills by Domain
+
+ECC ships **136 skills** — packaged domain knowledge that auto-activates when your
+task matches (e.g. editing a Django file pulls in the Django patterns/security/TDD
+skills). The `skills/` tree above shows a representative subset; the full catalog,
+grouped by domain, is below.
+
+### Languages & framework patterns (29)
+
+- `coding-standards` — TS/JS/React/Node standards & patterns
+- `backend-patterns` — Node/Express/Next API & server-side architecture
+- `frontend-patterns` — React/Next state, performance, UI
+- `python-patterns` — Pythonic idioms, PEP 8, type hints
+- `golang-patterns` — idiomatic Go conventions
+- `rust-patterns` — ownership, traits, error handling, concurrency
+- `kotlin-patterns` — idiomatic Kotlin with coroutines
+- `perl-patterns` — modern Perl 5.36+ idioms
+- `pytorch-patterns` — training pipelines & model architecture
+- `cpp-coding-standards` — C++ Core Guidelines enforcement
+- `java-coding-standards` — Spring Boot Java conventions
+- `django-patterns` — Django + DRF, ORM, caching, middleware
+- `laravel-patterns` — routing, Eloquent, queues, events, API resources
+- `springboot-patterns` — layered services, REST, caching, async
+- `kotlin-ktor-patterns` — Ktor routing, plugins, auth, DI, serialization
+- `kotlin-exposed-patterns` — Exposed ORM, HikariCP, Flyway
+- `kotlin-coroutines-flows` — structured concurrency, Flow, StateFlow
+- `android-clean-architecture` — Android/KMP module & dependency structure
+- `compose-multiplatform-patterns` — Compose/KMP state, navigation, theming
+- `swiftui-patterns` — SwiftUI @Observable, navigation, performance
+- `swift-actor-persistence` — actor-based thread-safe persistence
+- `swift-concurrency-6-2` — Swift 6.2 Approachable Concurrency
+- `foundation-models-on-device` — Apple on-device LLM (@Generable, tools)
+- `liquid-glass-design` — iOS 26 Liquid Glass material system
+- `nextjs-turbopack` — Next.js 16+/Turbopack bundling & dev speed
+- `nuxt4-patterns` — Nuxt 4 hydration-safe SSR data fetching
+- `bun-runtime` — Bun as runtime/PM/bundler/test runner
+- `flutter-dart-code-review` — Flutter/Dart widget & state-mgmt review
+
+### Testing, TDD, verification & quality (23)
+
+- `tdd-workflow` — enforce TDD with 80%+ coverage
+- `python-testing` — pytest, fixtures, mocking, coverage
+- `golang-testing` — table-driven tests, benchmarks, fuzzing
+- `rust-testing` — unit/integration/async/property tests
+- `kotlin-testing` — Kotest, MockK, coroutine testing, Kover
+- `cpp-testing` — GoogleTest/CTest, sanitizers, coverage
+- `perl-testing` — Test2::V0, prove, Devel::Cover
+- `django-tdd` — pytest-django, factory_boy, DRF testing
+- `laravel-tdd` — PHPUnit/Pest, factories, DB testing
+- `springboot-tdd` — JUnit 5, Mockito, MockMvc, Testcontainers
+- `django-verification` — Django pre-release verification loop
+- `laravel-verification` — Laravel pre-release verification loop
+- `springboot-verification` — Spring Boot pre-release verification loop
+- `verification-loop` — general continuous-verification system
+- `eval-harness` — eval-driven development framework
+- `e2e-testing` — Playwright, Page Object Model, CI artifacts
+- `browser-qa` — automated visual/UI verification via browser automation
+- `ai-regression-testing` — sandbox-mode regression testing for AI dev
+- `click-path-audit` — trace UI touchpoints' state changes for hidden bugs
+- `benchmark` — measure perf baselines, detect regressions
+- `canary-watch` — monitor a deployed URL for post-deploy regressions
+- `swift-protocol-di-testing` — protocol-based DI for testable Swift
+- `plankton-code-quality` — write-time format/lint/fix via hooks
+
+### Security & safety (7)
+
+- `security-review` — checklist for auth, input, secrets, payments
+- `security-scan` — audit `.claude/` config for vulnerabilities (AgentShield)
+- `safety-guard` — prevent destructive ops in prod/autonomous runs
+- `django-security` — authn/z, CSRF, SQLi/XSS prevention
+- `laravel-security` — authn/z, validation, uploads, secrets
+- `springboot-security` — Spring Security authn/z, headers, rate limits
+- `perl-security` — taint mode, parameterized DBI, web security
+
+### APIs, databases & data (6)
+
+- `api-design` — REST naming, status codes, pagination, versioning
+- `database-migrations` — schema/data migrations, zero-downtime, rollbacks
+- `postgres-patterns` — query optimization & indexing (Supabase best practices)
+- `jpa-patterns` — JPA/Hibernate entities, queries, transactions, pooling
+- `clickhouse-io` — ClickHouse analytics & query optimization
+- `content-hash-cache-pattern` — SHA-256 content-hash caching
+
+### DevOps & deployment (2)
+
+- `deployment-patterns` — CI/CD, Docker, health checks, rollbacks
+- `docker-patterns` — Compose, networking, volumes, container security
+
+### AI agents, LLM engineering & orchestration (27)
+
+- `claude-api` — Anthropic API (Messages, streaming, tools, caching)
+- `mcp-server-patterns` — build MCP servers (Node/TS SDK)
+- `agent-harness-construction` — design agent action spaces/tools/observations
+- `agentic-engineering` — eval-first, decomposition, cost-aware routing
+- `ai-first-engineering` — operating model for AI-heavy teams
+- `enterprise-agent-ops` — long-lived agent observability & lifecycle
+- `agent-eval` — head-to-head coding-agent benchmarking
+- `agent-payment-x402` — agent budgets/wallets via x402 MCP
+- `autonomous-loops` — architectures for autonomous Claude Code loops
+- `continuous-agent-loop` — continuous loops with quality gates/recovery
+- `claude-devfleet` — orchestrate parallel agents in isolated worktrees
+- `dmux-workflows` — multi-agent orchestration via dmux (tmux)
+- `team-builder` — pick & dispatch parallel agent teams
+- `santa-method` — dual adversarial review with convergence loop
+- `ralphinho-rfc-pipeline` — RFC-driven multi-agent DAG with merge queues
+- `blueprint` — turn a one-line objective into a construction plan
+- `iterative-retrieval` — progressive context refinement for subagents
+- `cost-aware-llm-pipeline` — model routing, budget tracking, caching
+- `context-budget` — audit context-window consumption
+- `token-budget-advisor` — offer informed response-depth choices
+- `strategic-compact` — suggest manual compaction at logical points
+- `prompt-optimizer` — analyze/optimize prompts into ECC-enriched versions
+- `regex-vs-llm-structured-text` — decide regex vs LLM for parsing
+- `deep-research` — multi-source cited web research (firecrawl/exa)
+- `exa-search` — neural web/code/company search via Exa MCP
+- `nanoclaw-repl` — operate/extend NanoClaw v2 REPL
+- `openclaw-persona-forge` — novelty: forge "OpenClaw" agent personas
+
+### Dev workflow, learning & repo intelligence (13)
+
+- `git-workflow` — branching, commits, merge vs rebase, conflicts
+- `search-first` — research existing tools/libraries before coding
+- `documentation-lookup` — up-to-date library docs via Context7 MCP
+- `codebase-onboarding` — generate an onboarding guide for unfamiliar code
+- `repo-scan` — audit/classify source assets & embedded third-party libs
+- `architecture-decision-records` — capture ADRs from sessions
+- `continuous-learning` — extract reusable patterns from sessions → saved skills
+- `continuous-learning-v2` — instinct-based learning with confidence scoring
+- `rules-distill` — distill skills into cross-cutting rules
+- `skill-stocktake` — audit skills/commands for quality
+- `skill-comply` — check whether skills/rules are actually followed
+- `configure-ecc` — interactive ECC installer wizard
+- `project-guidelines-example` — template for project-specific skills
+
+### Content, media & creative (9)
+
+- `article-writing` — long-form writing in a supplied voice
+- `content-engine` — platform-native content systems (X, LinkedIn, TikTok, YT)
+- `crosspost` — distribute across X, LinkedIn, Threads, Bluesky
+- `x-api` — X/Twitter posting, timelines, search, analytics
+- `frontend-slides` — animation-rich HTML decks (+ PPTX conversion)
+- `design-system` — generate/audit design systems, style-PR review
+- `videodb` — see/understand/act on video & audio
+- `video-editing` — AI-assisted real-footage editing pipeline
+- `fal-ai-media` — image/video/audio generation via fal.ai MCP
+
+### Business, product & fundraising (4)
+
+- `market-research` — sourced market/competitor/investor research
+- `investor-materials` — pitch decks, one-pagers, memos, financial models
+- `investor-outreach` — cold emails, warm intros, investor updates
+- `product-lens` — validate the "why", product diagnostics, specs
+
+### Healthcare vertical (4)
+
+- `healthcare-cdss-patterns` — clinical decision support (drug/dose/scoring)
+- `healthcare-emr-patterns` — EMR/EHR clinical workflows & safety
+- `healthcare-eval-harness` — patient-safety evaluation suites
+- `healthcare-phi-compliance` — PHI/PII compliance patterns
+
+### Supply chain, logistics & operations (8)
+
+- `carrier-relationship-management` — carrier portfolios, freight-rate negotiation
+- `customs-trade-compliance` — customs docs, tariff classification, duty
+- `energy-procurement` — electricity/gas procurement & tariff optimization
+- `inventory-demand-planning` — demand forecasting, safety-stock optimization
+- `logistics-exception-management` — freight exceptions, shipment delays
+- `production-scheduling` — job sequencing, line balancing
+- `quality-nonconformance` — QC & non-conformance root-cause
+- `returns-reverse-logistics` — returns authorization, receipt & inspection
+
+### Document processing & utilities (4)
+
+- `nutrient-document-processing` — convert/OCR/redact/sign/fill docs (Nutrient DWS)
+- `visa-doc-translate` — translate visa docs → bilingual PDF
+- `data-scraper-agent` — build automated public-source scraping agents
+- `ck` — persistent per-project memory for Claude Code
+
+> Totals by group: 29 + 23 + 7 + 6 + 2 + 27 + 13 + 9 + 4 + 4 + 8 + 4 = **136**.
+
+---
+
 ## Ecosystem Tools
 
 ### Skill Creator
