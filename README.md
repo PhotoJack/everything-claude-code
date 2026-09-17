@@ -292,8 +292,10 @@ This repo is a **Claude Code plugin** - install it directly or copy components m
 ```
 everything-claude-code/
 |-- .claude-plugin/   # Plugin and marketplace manifests
-|   |-- plugin.json         # Plugin metadata and component paths
-|   |-- marketplace.json    # Marketplace catalog for /plugin marketplace add
+|   |-- plugin.json            # Plugin metadata and component paths
+|   |-- marketplace.json       # Marketplace catalog for /plugin marketplace add
+|   |-- PLUGIN_SCHEMA_NOTES.md # Notes on the plugin manifest schema
+|   |-- README.md              # Plugin manifest documentation
 |
 |-- agents/           # 30 specialized subagents for delegation
 |   |-- planner.md           # Feature implementation planning
@@ -309,6 +311,7 @@ everything-claude-code/
 |   |-- chief-of-staff.md    # Communication triage and drafts
 |   |-- loop-operator.md     # Autonomous loop execution
 |   |-- harness-optimizer.md # Harness config tuning
+|   |-- performance-optimizer.md # Performance analysis & optimization
 |   |-- cpp-reviewer.md      # C++ code review
 |   |-- cpp-build-resolver.md # C++ build error resolution
 |   |-- go-reviewer.md       # Go code review
@@ -323,8 +326,11 @@ everything-claude-code/
 |   |-- rust-reviewer.md     # Rust code review
 |   |-- rust-build-resolver.md # Rust build error resolution
 |   |-- pytorch-build-resolver.md # PyTorch/CUDA training errors
+|   |-- flutter-reviewer.md   # Flutter/Dart code review
+|   |-- healthcare-reviewer.md # Healthcare code review (clinical safety, PHI)
 |
-|-- skills/           # Workflow definitions and domain knowledge
+|-- skills/           # 136 skills - workflow definitions & domain knowledge
+|   |                 #   (representative subset shown; run `ls skills/` for the full list)
 |   |-- coding-standards/           # Language best practices
 |   |-- clickhouse-io/              # ClickHouse analytics, queries, data engineering
 |   |-- backend-patterns/           # API, database, caching patterns
@@ -390,79 +396,124 @@ everything-claude-code/
 |   |-- autonomous-loops/           # Autonomous loop patterns: sequential pipelines, PR loops, DAG orchestration (NEW)
 |   |-- plankton-code-quality/      # Write-time code quality enforcement with Plankton hooks (NEW)
 |
-|-- commands/         # Slash commands for quick execution
+|-- commands/         # 60 slash commands for quick execution
+|   # Core workflow
 |   |-- tdd.md              # /tdd - Test-driven development
 |   |-- plan.md             # /plan - Implementation planning
 |   |-- e2e.md              # /e2e - E2E test generation
 |   |-- code-review.md      # /code-review - Quality review
 |   |-- build-fix.md        # /build-fix - Fix build errors
 |   |-- refactor-clean.md   # /refactor-clean - Dead code removal
-|   |-- learn.md            # /learn - Extract patterns mid-session (Longform Guide)
-|   |-- learn-eval.md       # /learn-eval - Extract, evaluate, and save patterns (NEW)
-|   |-- checkpoint.md       # /checkpoint - Save verification state (Longform Guide)
-|   |-- verify.md           # /verify - Run verification loop (Longform Guide)
-|   |-- setup-pm.md         # /setup-pm - Configure package manager
-|   |-- go-review.md        # /go-review - Go code review (NEW)
-|   |-- go-test.md          # /go-test - Go TDD workflow (NEW)
-|   |-- go-build.md         # /go-build - Fix Go build errors (NEW)
-|   |-- skill-create.md     # /skill-create - Generate skills from git history (NEW)
-|   |-- instinct-status.md  # /instinct-status - View learned instincts (NEW)
-|   |-- instinct-import.md  # /instinct-import - Import instincts (NEW)
-|   |-- instinct-export.md  # /instinct-export - Export instincts (NEW)
-|   |-- evolve.md           # /evolve - Cluster instincts into skills
-|   |-- prune.md            # /prune - Delete expired pending instincts (NEW)
-|   |-- pm2.md              # /pm2 - PM2 service lifecycle management (NEW)
-|   |-- multi-plan.md       # /multi-plan - Multi-agent task decomposition (NEW)
-|   |-- multi-execute.md    # /multi-execute - Orchestrated multi-agent workflows (NEW)
-|   |-- multi-backend.md    # /multi-backend - Backend multi-service orchestration (NEW)
-|   |-- multi-frontend.md   # /multi-frontend - Frontend multi-service orchestration (NEW)
-|   |-- multi-workflow.md   # /multi-workflow - General multi-service workflows (NEW)
-|   |-- orchestrate.md      # /orchestrate - Multi-agent coordination
-|   |-- sessions.md         # /sessions - Session history management
-|   |-- eval.md             # /eval - Evaluate against criteria
+|   |-- verify.md           # /verify - Run verification loop
+|   |-- checkpoint.md       # /checkpoint - Save verification state
 |   |-- test-coverage.md    # /test-coverage - Test coverage analysis
+|   |-- eval.md             # /eval - Evaluate against criteria
+|   |-- quality-gate.md     # /quality-gate - Run the ECC quality pipeline
+|   # Learning, skills & instincts
+|   |-- learn.md            # /learn - Extract patterns mid-session
+|   |-- learn-eval.md       # /learn-eval - Extract, evaluate & save patterns
+|   |-- skill-create.md     # /skill-create - Generate skills from git history
+|   |-- skill-health.md     # /skill-health - Skill portfolio health dashboard
+|   |-- evolve.md           # /evolve - Cluster instincts into skills
+|   |-- prune.md            # /prune - Delete expired pending instincts
+|   |-- promote.md          # /promote - Promote instincts to global scope
+|   |-- projects.md         # /projects - List projects & instinct stats
+|   |-- instinct-status.md  # /instinct-status - View learned instincts
+|   |-- instinct-import.md  # /instinct-import - Import instincts
+|   |-- instinct-export.md  # /instinct-export - Export instincts
+|   |-- rules-distill.md    # /rules-distill - Distill skills into rules
+|   # Sessions & context
+|   |-- sessions.md         # /sessions - Session history management
+|   |-- save-session.md     # /save-session - Save session state
+|   |-- resume-session.md   # /resume-session - Resume most recent session
+|   |-- context-budget.md   # /context-budget - Analyze context window usage
+|   |-- aside.md            # /aside - Answer a side question without losing context
+|   # Multi-agent & loops
+|   |-- orchestrate.md      # /orchestrate - Multi-agent coordination
+|   |-- multi-plan.md       # /multi-plan - Multi-agent task decomposition
+|   |-- multi-execute.md    # /multi-execute - Orchestrated multi-agent workflows
+|   |-- multi-backend.md    # /multi-backend - Backend multi-service orchestration
+|   |-- multi-frontend.md   # /multi-frontend - Frontend multi-service orchestration
+|   |-- multi-workflow.md   # /multi-workflow - General multi-service workflows
+|   |-- devfleet.md         # /devfleet - Orchestrate parallel agents (DevFleet)
+|   |-- loop-start.md       # /loop-start - Start a managed autonomous loop
+|   |-- loop-status.md      # /loop-status - Inspect active loop state
+|   # Language-specific (review / test / build)
+|   |-- python-review.md    # /python-review - Python code review
+|   |-- go-review.md        # /go-review - Go code review
+|   |-- go-test.md          # /go-test - Go TDD workflow
+|   |-- go-build.md         # /go-build - Fix Go build errors
+|   |-- cpp-review.md       # /cpp-review - C++ code review
+|   |-- cpp-test.md         # /cpp-test - C++ TDD workflow
+|   |-- cpp-build.md        # /cpp-build - Fix C++ build errors
+|   |-- kotlin-review.md    # /kotlin-review - Kotlin code review
+|   |-- kotlin-test.md      # /kotlin-test - Kotlin TDD workflow
+|   |-- kotlin-build.md     # /kotlin-build - Fix Kotlin/Gradle build errors
+|   |-- rust-review.md      # /rust-review - Rust code review
+|   |-- rust-test.md        # /rust-test - Rust TDD workflow
+|   |-- rust-build.md       # /rust-build - Fix Rust build/borrow errors
+|   |-- gradle-build.md     # /gradle-build - Fix Gradle build errors (Android/KMP)
+|   # Docs, harness & tooling
 |   |-- update-docs.md      # /update-docs - Update documentation
 |   |-- update-codemaps.md  # /update-codemaps - Update codemaps
-|   |-- python-review.md    # /python-review - Python code review (NEW)
+|   |-- docs.md             # /docs - Look up library docs via Context7
+|   |-- setup-pm.md         # /setup-pm - Configure package manager
+|   |-- pm2.md              # /pm2 - PM2 service lifecycle management
+|   |-- harness-audit.md    # /harness-audit - Repository harness audit scorecard
+|   |-- model-route.md      # /model-route - Recommend model tier for a task
+|   |-- prompt-optimize.md  # /prompt-optimize - Optimize a draft prompt
+|   |-- claw.md             # /claw - NanoClaw v2 persistent REPL
 |
 |-- rules/            # Always-follow guidelines (copy to ~/.claude/rules/)
 |   |-- README.md            # Structure overview and installation guide
 |   |-- common/              # Language-agnostic principles
-|   |   |-- coding-style.md    # Immutability, file organization
-|   |   |-- git-workflow.md    # Commit format, PR process
-|   |   |-- testing.md         # TDD, 80% coverage requirement
-|   |   |-- performance.md     # Model selection, context management
-|   |   |-- patterns.md        # Design patterns, skeleton projects
-|   |   |-- hooks.md           # Hook architecture, TodoWrite
-|   |   |-- agents.md          # When to delegate to subagents
-|   |   |-- security.md        # Mandatory security checks
-|   |-- typescript/          # TypeScript/JavaScript specific
-|   |-- python/              # Python specific
-|   |-- golang/              # Go specific
-|   |-- swift/               # Swift specific
-|   |-- php/                 # PHP specific (NEW)
+|   |   |-- coding-style.md         # Immutability, file organization
+|   |   |-- git-workflow.md         # Commit format, PR process
+|   |   |-- testing.md              # TDD, 80% coverage requirement
+|   |   |-- performance.md          # Model selection, context management
+|   |   |-- patterns.md             # Design patterns, skeleton projects
+|   |   |-- hooks.md                # Hook architecture, TodoWrite
+|   |   |-- agents.md               # When to delegate to subagents
+|   |   |-- security.md             # Mandatory security checks
+|   |   |-- code-review.md          # Code review guidelines
+|   |   |-- development-workflow.md # End-to-end development workflow
+|   |-- typescript/          # TypeScript/JavaScript rules
+|   |-- python/              # Python rules
+|   |-- golang/              # Go rules
+|   |-- rust/                # Rust rules
+|   |-- java/                # Java rules
+|   |-- kotlin/              # Kotlin rules
+|   |-- swift/               # Swift rules
+|   |-- cpp/                 # C++ rules
+|   |-- csharp/              # C# rules
+|   |-- php/                 # PHP rules
+|   |-- perl/                # Perl rules
+|   |-- zh/                  # Chinese (zh) translations of the rules
 |
-|-- hooks/            # Trigger-based automations
-|   |-- README.md                 # Hook documentation, recipes, and customization guide
+|-- hooks/            # Plugin hook configuration
 |   |-- hooks.json                # All hooks config (PreToolUse, PostToolUse, Stop, etc.)
-|   |-- memory-persistence/       # Session lifecycle hooks (Longform Guide)
-|   |-- strategic-compact/        # Compaction suggestions (Longform Guide)
+|   |-- README.md                 # Hook documentation, recipes, and customization guide
+|   |                             # (hook scripts live in scripts/hooks/)
 |
-|-- scripts/          # Cross-platform Node.js scripts (NEW)
-|   |-- lib/                     # Shared utilities
-|   |   |-- utils.js             # Cross-platform file/path/system utilities
-|   |   |-- package-manager.js   # Package manager detection and selection
-|   |-- hooks/                   # Hook implementations
-|   |   |-- session-start.js     # Load context on session start
-|   |   |-- session-end.js       # Save state on session end
-|   |   |-- pre-compact.js       # Pre-compaction state saving
-|   |   |-- suggest-compact.js   # Strategic compaction suggestions
-|   |   |-- evaluate-session.js  # Extract patterns from sessions
+|-- scripts/          # Cross-platform Node.js scripts (hooks, install, CI, tooling)
+|   |-- lib/                     # Shared utilities (utils, package-manager, install-*,
+|   |                            #   session-adapters, skill-evolution, state-store, ...)
+|   |-- hooks/                   # Hook implementations (session-start/end, pre-compact,
+|   |                            #   post-edit-format, quality-gate, cost-tracker, ...)
+|   |-- ci/                      # Validators (agents, commands, hooks, rules, skills, ...)
+|   |-- codemaps/                # Codemap generation
+|   |-- codex/                   # Codex adapter helpers
+|   |-- ecc.js                   # ECC CLI entry point
+|   |-- doctor.js                # Environment/health diagnostics
+|   |-- claw.js                  # NanoClaw REPL launcher
 |   |-- setup-package-manager.js # Interactive PM setup
 |
-|-- tests/            # Test suite (NEW)
+|-- tests/            # Test suite (node tests/run-all.js)
 |   |-- lib/                     # Library tests
 |   |-- hooks/                   # Hook tests
+|   |-- scripts/                 # Script/CLI tests
+|   |-- ci/                      # CI validator tests
+|   |-- integration/             # Integration tests
 |   |-- run-all.js               # Run all tests
 |
 |-- contexts/         # Dynamic system prompt injection contexts (Longform Guide)
@@ -471,18 +522,44 @@ everything-claude-code/
 |   |-- research.md         # Research/exploration mode context
 |
 |-- examples/         # Example configurations and sessions
-|   |-- CLAUDE.md             # Example project-level config
-|   |-- user-CLAUDE.md        # Example user-level config
-|   |-- saas-nextjs-CLAUDE.md   # Real-world SaaS (Next.js + Supabase + Stripe)
+|   |-- CLAUDE.md                 # Example project-level config
+|   |-- user-CLAUDE.md            # Example user-level config
+|   |-- saas-nextjs-CLAUDE.md     # Real-world SaaS (Next.js + Supabase + Stripe)
 |   |-- go-microservice-CLAUDE.md # Real-world Go microservice (gRPC + PostgreSQL)
 |   |-- django-api-CLAUDE.md      # Real-world Django REST API (DRF + Celery)
-|   |-- laravel-api-CLAUDE.md     # Real-world Laravel API (PostgreSQL + Redis) (NEW)
-|   |-- rust-api-CLAUDE.md        # Real-world Rust API (Axum + SQLx + PostgreSQL) (NEW)
+|   |-- laravel-api-CLAUDE.md     # Real-world Laravel API (PostgreSQL + Redis)
+|   |-- rust-api-CLAUDE.md        # Real-world Rust API (Axum + SQLx + PostgreSQL)
+|   |-- statusline.json           # Example status line configuration
+|   |-- remotion-video-editor/    # Example Remotion video editor project
 |
 |-- mcp-configs/      # MCP server configurations
 |   |-- mcp-servers.json    # GitHub, Supabase, Vercel, Railway, etc.
 |
-|-- marketplace.json  # Self-hosted marketplace config (for /plugin marketplace add)
+|-- docs/             # Extended documentation, guides & translations (ja-JP, ko-KR, pt-BR)
+|-- schemas/          # JSON schemas (install config, hooks, components, modules, profiles)
+|-- manifests/        # Install manifests (components, modules, profiles)
+|-- assets/           # Images and static assets
+|-- ecc2/             # ECC 2.0 Rust implementation (Cargo crate)
+|-- research/         # Research notes and analyses
+|-- plugins/          # Plugin & marketplace usage guide
+|
+|-- .agents/          # Portable agent assets (skills, plugins) for cross-tool install
+|-- .claude/          # ECC's own Claude Code config used to build this repo
+|-- .cursor/          # Cursor IDE adapter (rules, skills, hooks, commands)
+|-- .codex/           # Codex CLI/app adapter (+ .codex-plugin/ manifest)
+|-- .opencode/        # OpenCode adapter (commands, instructions, plugins)
+|-- .kiro/            # Kiro IDE adapter
+|-- .trae/            # Trae IDE adapter
+|-- .github/          # GitHub Actions workflows & issue templates
+|
+|-- Guides:  the-longform-guide.md, the-shortform-guide.md, the-security-guide.md
+|-- Docs:    README.md, README.zh-CN.md, CONTRIBUTING.md, CHANGELOG.md, AGENTS.md,
+|            CLAUDE.md, RULES.md, COMMANDS-QUICK-REF.md, TROUBLESHOOTING.md,
+|            EVALUATION.md, REPO-ASSESSMENT.md, SECURITY.md, CODE_OF_CONDUCT.md,
+|            SOUL.md, SPONSORS.md, SPONSORING.md, LICENSE
+|-- Install: install.sh, install.ps1, agent.yaml
+|-- Config:  package.json, eslint.config.js, commitlint.config.js, .markdownlint.json,
+|            .mcp.json, .prettierrc, .tool-versions, .yarnrc.yml, .env.example, VERSION
 ```
 
 ---
